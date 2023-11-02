@@ -7,39 +7,24 @@
 
 #ifndef LIB_WAYNENUMBERUTIL_HPP_
 #define LIB_WAYNENUMBERUTIL_HPP_
-#include <cstring>
-#include <climits>
 #include <vector>
 #include "wayneIO.hpp";
 
 namespace wayne {
+
 	namespace numberUtil {
 
-		std::vector<char> intToHexBytes(int number, bool isFixedLength = false, int fixedLength = 0, char padByte = '\x00');
-		std::vector<char> longToHexBytes(long number, bool isFixedLength = false, int fixedLength = 0, char padByte = '\x00');
-		std::vector<char> unsignedIntToHexBytes(unsigned int number, bool isFixedLength = false, int fixedLength = 0, char padByte = '\x00');
-		std::vector<char> unsignedLongToHexBytes(unsigned long number, bool isFixedLength = false, int fixedLength = 0, char padByte = '\x00');
+		enum numberDataLength {
+			SHORT_LENGTH = 2,
+			INTEGER_LENGTH = 4,
+			LONG_LENGTH = 8
+		};
 
-		char* intToHexBytesStatic(int number, bool isFixedLength = false, int fixedLength = 0, char padByte = '\x00');
-		char* longToHexBytesStatic(long number, bool isFixedLength = false, int fixedLength = 0, char padByte = '\x00');
-		char* unsignedIntToHexBytesStatic(unsigned int number, bool isFixedLength = false, int fixedLength = 0, char padByte = '\x00');
-		char* unsignedLongToHexBytesStatic(unsigned long number, bool isFixedLength = false, int fixedLength = 0, char padByte = '\x00');
-
-		int hexBytesStaticToInt(char* hexBytes, int hexLength, bool isPositive = true);
-		long hexBytesStaticToLong(char* hexBytes, int hexLength, bool isPositive = true);
-		unsigned int unsignedHexBytesStaticToInt(char* hexBytes, int hexLength);
-		unsigned long unsignedHexBytesStaticToLong(char* hexBytes, int hexLength);
-
-		int hexBytesToInt(std::vector<char> hexBytes, bool isPositive = true);
-		long hexBytesToLong(std::vector<char> hexBytes, bool isPositive = true);
-		unsigned int unsignedHexBytesToInt(std::vector<char> hexBytes);
-		unsigned long unsignedHexBytesToLong(std::vector<char> hexBytes);
-
-		unsigned int getOnesComplimentUnsignedInt(int negativeNumber, unsigned int byteLength);
-		unsigned long getOnesComplimentUnsignedLong(long negativeNumber, unsigned int byteLength);
-		unsigned int getTwosComplimentUnsignedInt(int negativeNumber, unsigned int byteLength);
-		unsigned long getTwosComplimentUnsignedLong(long negativeNumber, unsigned int byteLength);
-
+		template<typename integerType> std::vector<char> numberToBytes(integerType const& number, bool forceBigEndian=false);
+		template<typename integerType> char* numberToBytesStatic(integerType const& number, bool forceBigEndian=false);
+		template<typename integerType> integerType bytesToNumber(std::vector<char> rawBytes, integerType const& referenceType, bool rawIsBigEndian=false);
+		template<typename integerType> integerType bytesStaticToNumber(char* rawBytes, integerType const& referenceType, bool rawIsBigEndian=false);
+		bool isBigEndian();
 
 	} /* namespace numberUtil */
 } /* namespace wayne */

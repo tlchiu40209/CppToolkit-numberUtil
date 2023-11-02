@@ -9,27 +9,37 @@
 
 namespace wayne {
 	namespace numberUtil {
-		template<typename integerType> std::vector<char> numberToBytes(integerType const& number, bool forceBigEndian)
+		template<typename integerType> std::vector<char> numberToBytes(integerType const& number, numberByteOrder numByteOrder)
 		{
 			std::vector<char> toReturn;
 			for (int i = 0; i < sizeof(number); i++) {
 				toReturn.push_back((number >> (i * 8)));
 			}
-			if (isBigEndian() || forceBigEndian) {
+			switch (numByteOrder)
+			{
+			case numberByteOrder::ORDER_DATA_DEFAULT:
+				if (isBigEndian()) {
+					std::reverse(toReturn.begin(), toReturn.end());
+				}
+				break;
+			case numberByteOrder::ORDER_DATA_SMALL_ENDIAN:
+				break;
+			case numberByteOrder::ORDER_DATA_BIG_ENDIAN:
 				std::reverse(toReturn.begin(), toReturn.end());
+				break;
 			}
 			return toReturn;
 		}
 
-		template<typename integerType> char* numberToBytesStatic(integerType const& number, bool forceBigEndian)
+		template<typename integerType> char* numberToBytesStatic(integerType const& number, numberByteOrder numByteOrder)
 		{
-			std::vector<char> toHandle = numberToBytes(number, forceBigEndian);
+			std::vector<char> toHandle = numberToBytes(number, numByteOrder);
 			char* toReturn = new char[toHandle.size()];
 			std::copy(toHandle.begin(), toHandle.end(), toReturn);
 			return toReturn;
 		}
 
-		template<typename integerType> integerType bytesToNumber(std::vector<char> rawBytes, integerType const& referenceType, bool rawIsBigEndian)
+		template<typename integerType> integerType bytesToNumber(std::vector<char> rawBytes, integerType const& referenceType, numberByteOrder rawByteOrder)
 		{
 			if (rawBytes.size() != sizeof(referenceType)) {
 				wayne::IO::logLn("Provided length of data bytes does not match with the provided reference type", true);
@@ -37,9 +47,20 @@ namespace wayne {
 			}
 			else
 			{
-				if (isBigEndian && !isBigEndian()) //If the given data is big endian, but the processor is not.
+				switch (rawByteOrder)
 				{
-					std::reverse(rawBytes.begin(), rawBytes.end());
+				case numberByteOrder::ORDER_DATA_DEFAULT:
+					break;
+				case numberByteOrder::ORDER_DATA_SMALL_ENDIAN:
+					if (isBigEndian()) {
+						std::reverse(rawBytes.begin(), rawBytes.end());
+					}
+					break;
+				case numberByteOrder::ORDER_DATA_BIG_ENDIAN:
+					if (!isBigEndian()) {
+						std::reverse(rawBytes.begin(), rawBytes.end());
+					}
+					break;
 				}
 				integerType toReturn;
 				unsigned char* buffer = new unsigned char[rawBytes.size()];
@@ -50,11 +71,11 @@ namespace wayne {
 		    }
 		}
 
-		template<typename integerType> integerType bytesStaticToNumber(char* rawBytes, numberDataLength dataLength, integerType const& referenceType, bool rawIsBigEndian)
+		template<typename integerType> integerType bytesStaticToNumber(char* rawBytes, numberDataLength dataLength, integerType const& referenceType, numberByteOrder rawByteOrder)
 		{
 			std::vector<char> toRecur(dataLength);
 			std::copy(rawBytes, rawBytes + dataLength, toRecur);
-			return bytesToNumber(toRecur, referenceType, isBigEndian);
+			return bytesToNumber(toRecur, referenceType, rawByteOrder);
 		}
 
 		bool isBigEndian()

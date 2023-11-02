@@ -15,15 +15,21 @@ namespace wayne {
 	namespace numberUtil {
 
 		enum numberDataLength {
-			SHORT_LENGTH = 2,
-			INTEGER_LENGTH = 4,
-			LONG_LENGTH = 8
+			SHORT_DATA_LENGTH = 2,
+			INTEGER_DATA_LENGTH = 4,
+			LONG_DATA_LENGTH = 8
 		};
 
-		template<typename integerType> std::vector<char> numberToBytes(integerType const& number, bool forceBigEndian=false);
-		template<typename integerType> char* numberToBytesStatic(integerType const& number, bool forceBigEndian=false);
-		template<typename integerType> integerType bytesToNumber(std::vector<char> rawBytes, integerType const& referenceType, bool rawIsBigEndian=false);
-		template<typename integerType> integerType bytesStaticToNumber(char* rawBytes, integerType const& referenceType, bool rawIsBigEndian=false);
+		enum numberByteOrder {
+			ORDER_DATA_DEFAULT = 0,
+			ORDER_DATA_SMALL_ENDIAN = 1,
+			ORDER_DATA_BIG_ENDIAN = 2
+		};
+
+		template<typename integerType> std::vector<char> numberToBytes(integerType const& number, numberByteOrder numByteOrder = ORDER_DATA_DEFAULT);
+		template<typename integerType> char* numberToBytesStatic(integerType const& number, numberByteOrder numByteOrder = ORDER_DATA_DEFAULT);
+		template<typename integerType> integerType bytesToNumber(std::vector<char> rawBytes, integerType const& referenceType, numberByteOrder rawByteOrder = ORDER_DATA_DEFAULT);
+		template<typename integerType> integerType bytesStaticToNumber(char* rawBytes, integerType const& referenceType, numberByteOrder rawByteOrder = ORDER_DATA_DEFAULT);
 		bool isBigEndian();
 
 	} /* namespace numberUtil */

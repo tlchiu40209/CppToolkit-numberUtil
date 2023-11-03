@@ -78,6 +78,16 @@ namespace wayne {
 			return bytesToNumber(toRecur, referenceType, rawByteOrder);
 		}
 
+		template<typename integerType> integerType nextNearestMultOfXFromY(integerType const& y, integerType const& x)
+		{
+			if (y % x == 0) {
+				return y;
+			}
+			else {
+				return (x * ((y / x) + 1));
+			}
+		}
+
 		bool isBigEndian()
 		{
 			short int testWord = 0x0001;

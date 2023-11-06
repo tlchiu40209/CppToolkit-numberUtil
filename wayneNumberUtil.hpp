@@ -28,14 +28,14 @@ namespace wayne {
 
 		class numberTypeReference {
 			public:
-				static const short DATA_TYPE_SHORT = 0;
-				static const unsigned short DATA_TYPE_UNSIGNED_SHORT = 0;
-				static const int DATA_TYPE_INTEGER = 0;
-				static const unsigned int DATA_TYPE_UNSIGNED_INTEGER = 0;
-				static const long DATA_TYPE_LONG = 0;
-				static const unsigned long DATA_TYPE_UNSIGNED_LONG = 0;
-				static const long long DATA_TYPE_LONG_LONG = 0;
-				static const unsigned long long DATA_TYPE_UNSIGNED_LONG_LONG = 0;
+				inline static const short DATA_TYPE_SHORT = 0;
+				inline static const unsigned short DATA_TYPE_UNSIGNED_SHORT = 0;
+				inline static const int DATA_TYPE_INTEGER = 0;
+				inline static const unsigned int DATA_TYPE_UNSIGNED_INTEGER = 0;
+				inline static const long DATA_TYPE_LONG = 0;
+				inline static const unsigned long DATA_TYPE_UNSIGNED_LONG = 0;
+				inline static const long long DATA_TYPE_LONG_LONG = 0;
+				inline static const unsigned long long DATA_TYPE_UNSIGNED_LONG_LONG = 0;
 		};
 		
 		bool isBigEndian();

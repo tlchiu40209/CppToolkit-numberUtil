@@ -8,7 +8,7 @@ Access these functions by adding namespace:
 
 ## Usage
 
-- <code>numberToBytes(int/long number, numberByteOrder numByteOrder(Optional))</code>   
+- <code>numberToBytes(int/long number, numberByteOrder numByteOrder</code>   
   
   - Convert **a number type**(e.g., <code>int, long, long long,...</code>) to a byte array <code>std::vector\<char\></code>
   
@@ -22,13 +22,13 @@ Access these functions by adding namespace:
   
   - Returns <code>std::vector\<char\></code>
 
-- <code>numberToBytesStatic(int/long number, numberByteOrder numByteOrder(Optional))</code>
+- <code>numberToBytesStatic(int/long number, numberByteOrder numByteOrder</code>
   
   - It acts the same as <code>numberToBytes</code>, but it returns <code>char*</code> array.
   
   - Returns <code>char*</code>
 
-- <code>bytesToNumber(std::vector\<char\> rawBytes, <integerType> reference, numberByteOrder rawByteOrder(Optional))</code>
+- <code>bytesToNumber(std::vector\<char\> rawBytes, <integerType> reference, numberByteOrder rawByteOrder</code>
   
   - It converts a <code>std::vector\<char\></code> back to a number type, according to the <code>reference</code>'s number type.
   
@@ -42,7 +42,7 @@ Access these functions by adding namespace:
   
   - Returns **Data Type according to the reference**
 
-- <code>bytesStaticToNumber(char* rawBytes, <integerType> reference, numberByteOrder rawByteOrder(Optional))</code>
+- <code>bytesStaticToNumber(char* rawBytes, <integerType> reference, numberByteOrder rawByteOrder</code>
   
   - It acts the same as <code>bytesToNumber</code>, but this time, a <code>char* rawBytes</code> is provided. 
   
